@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styleindex.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='sun' cx='50%25' cy='72%25' r='60%25'%3E%3Cstop offset='0%25' stop-color='%23ffd59a'/%3E%3Cstop offset='45%25' stop-color='%23f9b872'/%3E%3Cstop offset='100%25' stop-color='%23f0766b'/%3E%3C/radialGradient%3E%3ClinearGradient id='sea' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%235eead4'/%3E%3Cstop offset='100%25' stop-color='%232b8a9e'/%3E%3C/linearGradient%3E%3CclipPath id='disc'%3E%3Ccircle cx='32' cy='32' r='29'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23disc)'%3E%3Crect x='0' y='0' width='64' height='64' fill='url(%23sun)'/%3E%3Crect x='0' y='37' width='64' height='27' fill='url(%23sea)'/%3E%3Crect x='0' y='35.5' width='64' height='3' fill='%23ffffff' opacity='0.85'/%3E%3Crect x='18' y='45' width='28' height='2.4' rx='1.2' fill='%23ffffff' opacity='0.35'/%3E%3Crect x='24' y='52' width='16' height='2.4' rx='1.2' fill='%23ffffff' opacity='0.25'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='29' fill='none' stroke='%2307121c' stroke-width='2.5'/%3E%3C/svg%3E">
+    <title>Your trip · PackCheck</title>
+</head>
+<body class="page-dest">
+    <nav class="navbar" id="mainNav" aria-label="Main navigation">
+        <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true"></span>
+            PackCheck
+        </a>
+
+        
+    </nav>
+
+    <main class="dest">
+        <a class="back-link" href="index.html">← Change destination</a>
+
+        <header class="dest-head">
+            <p class="dest-eyebrow" id="destCountry">&nbsp;</p>
+            <h1 class="dest-title" id="destName">Your destination</h1>
+            <p class="dest-meta">
+                <span id="destCoords"></span>
+                <span class="dot" aria-hidden="true">·</span>
+                <span id="destTime">Local time loading…</span>
+            </p>
+        </header>
+
+        <div class="dest-grid">
+            <div class="dest-globe">
+                <canvas id="destGlobe" role="img" aria-label="Globe showing your destination"></canvas>
+            </div>
+
+            <div class="dest-side">
+                <section class="card" aria-labelledby="tripTitle">
+                    <div class="card-head">
+                        <h2 class="card-title" id="tripTitle">When are you going?</h2>
+                        <span class="card-note" id="tripLength"></span>
+                    </div>
+                    <form class="trip-dates" id="tripForm">
+                        <label class="trip-field">
+                            <span>From</span>
+                            <input type="date" id="tripStart" required>
+                        </label>
+                        <label class="trip-field">
+                            <span>To</span>
+                            <input type="date" id="tripEnd" required>
+                        </label>
+                    </form>
+                    <p class="pack-error" id="tripError" aria-live="polite"></p>
+                </section>
+
+                <section class="card" aria-labelledby="riskTitle">
+                    <div class="card-head">
+                        <h2 class="card-title" id="riskTitle">Heads up</h2>
+                        <span class="card-note" id="riskNote"></span>
+                    </div>
+                    <ul class="risk-list" id="riskList">
+                        <li class="wx-loading">Checking weather, climate, storms and health risks…</li>
+                    </ul>
+                    <p class="risk-sources">
+                        Health info is general guidance, not medical advice. Check current outbreaks with
+                        <a href="https://wwwnc.cdc.gov/travel/notices" target="_blank" rel="noopener">CDC travel notices</a>
+                        and
+                        <a href="https://www.who.int/emergencies/disease-outbreak-news" target="_blank" rel="noopener">WHO outbreak news</a>,
+                        and see a travel clinic 4–6 weeks before you go.
+                    </p>
+                </section>
+
+                <section class="card" aria-labelledby="wxTitle">
+                    <div class="card-head">
+                        <h2 class="card-title" id="wxTitle">Next 7 days</h2>
+                        <span class="card-note" id="wxNow"></span>
+                    </div>
+                    <ol class="wx-days" id="wxDays">
+                        <li class="wx-loading">Checking the forecast…</li>
+                    </ol>
+                </section>
+
+                <section class="card" aria-labelledby="packTitle">
+                    <div class="card-head">
+                        <h2 class="card-title" id="packTitle">Packing list</h2>
+                        <span class="card-note" id="packCount">0 of 0 packed</span>
+                    </div>
+                    <div class="progress" aria-hidden="true"><span id="packBar"></span></div>
+                    <p class="pack-hint" id="packHint">Built from your dates, the weather, storms and health risks. Tick things off as you pack.</p>
+
+                    <ul class="pack-list" id="packList"></ul>
+
+                    <form class="pack-add" id="packAdd" autocomplete="off">
+                        <label class="sr-only" for="packInput">Add an item</label>
+                        <input id="packInput" type="text" placeholder="Snorkel gear">
+                        <button class="btn btn--ghost" type="submit">Add</button>
+                    </form>
+                    <p class="pack-error" id="packError" aria-live="polite"></p>
+                </section>
+            </div>
+        </div>
+    <footer class="site-footer">
+        <p>&copy; <span id="copyrightYear">2026</span> Vivaan Singh. All rights reserved.</p>
+    </footer>
+    </main>
+
+    <script>
+        const mainNav = document.getElementById("mainNav");
+        const updateNav = () => mainNav.classList.toggle("scrolled", window.scrollY > 40);
+        window.addEventListener("scroll", updateNav, { passive: true });
+        updateNav();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+    <script src="globe.js"></script>
+    <script src="destination.js"></script>
+</body>
+</html>
